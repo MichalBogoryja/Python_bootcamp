@@ -128,3 +128,5 @@ venv/Include/
 /.idea/
 .idea/workspace.xml
 *.xml
+/ListaPytan.txt
+.idea/workspace.xml
