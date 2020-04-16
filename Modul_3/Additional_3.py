@@ -1,3 +1,5 @@
+import copy
+
 models = ['Volkswagen - Golf','Renault - Clio','Volkswagen - Polo',
 'Ford - Fiesta','Nissan - Qashqai','Peugeot - 208','VW - Tiguan','Skoda - Octavia',
 'Toyota - Yaris','Opel - Corsa','Dacia - Sandero','Renault - Captur','Citroen - C3',
@@ -29,6 +31,9 @@ cars = {}
 
 highest_amount_2017 = 0
 highest_brand_2018 = 0
+lowest_total = 10000000000
+ford_2017 = 0
+ford_2018 = 0
 
 for i, type in enumerate(models):
     type = type.split(' - ')
@@ -49,40 +54,33 @@ for i, type in enumerate(models):
     cars[brand][model]["sales"]["2017"] = price2017
     cars[brand][model]["sales"]["2018"] = price2018
 
-for brand, models in cars.items():
+modified_cars = copy.deepcopy(cars)
+
+for brand, models in modified_cars.items():
     # print(brand)
-    cars[brand]["total_2018"] = 0
+    modified_cars[brand]["total_2018"] = 0
     for model, sales in models.items():
         if model != "total_2018":
-            cars[brand]["total_2018"] += int(cars[brand][model]["sales"]["2018"])
+            modified_cars[brand]["total_2018"] += int(modified_cars[brand][model]["sales"]["2018"])
             for sale, years in sales.items():
-                # print (years)
+                years["total"] = years["2016"] + years["2017"] +years["2018"]
+                if years["2017"] > highest_amount_2017:
+                    highest_amount_2017 = years["2017"]
+                    answer1 = model
                 if years["2016"] == 0 and years["2017"] != 0:
-                    answer3_1 += 1
                     answer3.append(model)
-                print(f"Years {years}")
+                if years["total"] < lowest_total:
+                    lowest_total = years["total"]
+                    answer4 = model
+            if brand == "Ford":
+                ford_2017 += years["2017"]
+                ford_2018 += years["2018"]
+                pass
 
-                for year, amount in years.items():
-                    print(f"Year {year}")
-                    if year == "2017" and amount > highest_amount_2017:
-                        highest_amount_2017 = amount
-                        answer1 = model
-    if cars[brand]["total_2018"] > highest_brand_2018:
-        highest_brand_2018 = cars[brand]["total_2018"]
+    if modified_cars[brand]["total_2018"] > highest_brand_2018:
+        highest_brand_2018 = modified_cars[brand]["total_2018"]
         answer2 = brand
 
-# for brand, models in cars.items():
-#     # print(brand)
-#     cars[brand]["total_2018"] = 0
-#     print(brand)
-#     for model, sales in models.items():
-#         if model != "total_2018":
-#             cars[brand]["total_2018"] += int(cars[brand][model]["sales"]["2018"])
-#         pass
+answer5 = "{:.0%}".format(((ford_2018-ford_2017) / ford_2017))
 
-# print(highest_amount_2017)
-# print(answer1)
-# print(cars)
-print(brand)
-print(answer3_1)
-print(answer3)
+print(cars)
