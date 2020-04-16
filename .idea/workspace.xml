@@ -202,7 +202,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.task_3_4">
+  <component name="RunManager" selected="Python.task_3_1_1">
     <configuration name="Additional_4" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Python_bootcamp" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -310,8 +310,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.task_3_4" />
         <item itemvalue="Python.task_3_1_1" />
+        <item itemvalue="Python.task_3_4" />
         <item itemvalue="Python.task_3_1_2" />
         <item itemvalue="Python.Task_2_5" />
         <item itemvalue="Python.Additional_4" />
