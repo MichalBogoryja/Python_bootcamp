@@ -102,6 +102,8 @@ celerybeat-schedule
 .venv
 env/
 venv/
+venv2/
+.idea/
 ENV/
 env.bak/
 venv.bak/
@@ -129,4 +131,3 @@ venv/Include/
 .idea/workspace.xml
 *.xml
 /ListaPytan.txt
-.idea/workspace.xml
