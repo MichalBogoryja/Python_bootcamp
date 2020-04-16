@@ -103,7 +103,6 @@ celerybeat-schedule
 env/
 venv/
 venv2/
-.idea/
 ENV/
 env.bak/
 venv.bak/
@@ -126,8 +125,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-venv/Include/
-/.idea/
-.idea/workspace.xml
-*.xml
 /ListaPytan.txt
