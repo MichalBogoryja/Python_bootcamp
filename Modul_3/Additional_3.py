@@ -63,7 +63,7 @@ for brand, models in modified_cars.items():
         if model != "total_2018":
             modified_cars[brand]["total_2018"] += int(modified_cars[brand][model]["sales"]["2018"])
             for sale, years in sales.items():
-                years["total"] = years["2016"] + years["2017"] +years["2018"]
+                years["total"] = years["2016"] + years["2017"] + years["2018"]
                 if years["2017"] > highest_amount_2017:
                     highest_amount_2017 = years["2017"]
                     answer1 = model
