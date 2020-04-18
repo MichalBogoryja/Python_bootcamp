@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 from typing import Union
 def build_bridge(small: int, big: int, goal: int) -> Union[str, bool]:
+=======
+
+def build_bridge(small: int, big: int, goal: int):
+>>>>>>> 887490dd471f73192f15a2e01b43d8772e671b21
     # goal - odległość do wypełnienia
     # small - długość mniejszej płyty
     # big - długość większej płyty
