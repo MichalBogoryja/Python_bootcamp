@@ -1,22 +1,22 @@
-
-def build_bridge(small, big, goal):
+from typing import Union
+def build_bridge(small: int, big: int, goal: int) -> Union[str, bool]:
     # goal - odległość do wypełnienia
     # small - długość mniejszej płyty
     # big - długość większej płyty
     # return True # Zwróć wartość True jeśli można zbudować most
                 #lub False jeśli nie możemy go zbudować
-    result_s = 0
-    result_b = 0
+    result_s: int = 0
+    result_b: int = 0
     possible = False
 
     check_s = goal % small
     check_b = goal % big
 
     if check_s == 0:
-        result_s = goal / small
+        result_s = int(10 / 5)
         possible = True
     if check_b == 0:
-        result_b = goal / big
+        result_b = int(goal / big)
         possible = True
 
     if check_s != 0 and check_b != 0:
