@@ -1,5 +1,5 @@
 from typing import Union
-=======
+def build_bridge(small: int, big: int, goal: int) -> Union[str, bool]:
 
     # goal - odległość do wypełnienia
     # small - długość mniejszej płyty
