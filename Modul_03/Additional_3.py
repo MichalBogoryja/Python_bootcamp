@@ -1,4 +1,8 @@
 import copy
+import logging
+
+logging.basicConfig(filename='cars.log', filemode='w', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - '
+                                                                                   '%(message)s')
 
 models = ['Volkswagen - Golf','Renault - Clio','Volkswagen - Polo',
 'Ford - Fiesta','Nissan - Qashqai','Peugeot - 208','VW - Tiguan','Skoda - Octavia',
@@ -57,7 +61,7 @@ for i, type in enumerate(models):
 modified_cars = copy.deepcopy(cars)
 
 for brand, models in modified_cars.items():
-    # print(brand)
+    logging.debug(f'Brand of a car: {brand}')
     modified_cars[brand]["total_2018"] = 0
     for model, sales in models.items():
         if model != "total_2018":
