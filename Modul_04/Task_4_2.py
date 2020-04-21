@@ -1,3 +1,6 @@
+import string
+
+
 def check_palindromes(text: str) -> bool:
     """
     Returns 'True' or 'False', based on the argument being palindrome or not:
@@ -5,10 +8,14 @@ def check_palindromes(text: str) -> bool:
         text
     """
 
+    # for char in text:
+    #     if char in ['ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ź', 'ż', 'Ą', 'Ć', 'Ę', 'Ł', 'Ó', 'Ś', 'Ź', 'Ż']:
+    #         pass
+    #     elif ord(char) < 65 or 90 < ord(char) < 97 or 122 < ord(char):
+    #         text = text.replace(char, '')
+
     for char in text:
-        if char in ['ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ź', 'ż', 'Ą', 'Ć', 'Ę', 'Ł', 'Ó', 'Ś', 'Ź', 'Ż']:
-            pass
-        elif ord(char) < 65 or 90 < ord(char) < 97 or 122 < ord(char):
+        if char in string.punctuation or char in string.whitespace:
             text = text.replace(char, '')
 
     text = text.lower()
