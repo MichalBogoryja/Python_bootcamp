@@ -5,6 +5,8 @@ from functools import reduce
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(message)s')
 
+number = ['Pierwszą', 'Drugą', 'Kolejną']
+
 
 def adding(numbers):
     result = sum(numbers)
@@ -31,43 +33,62 @@ def resulting(i, numbers):
     return func(numbers)
 
 
-in_values = []
+def report_printing(numbers, executed_operation, outcome):
+    report = f'''
+    Podałeś liczby: {numbers}
+    Wynik ich {executed_operation} to: {outcome}
+    '''
+    return report
+
+
 possible_operations = {
     '+': [adding, 'dodawania'],
     '-': (subtracting, 'odejmowania'),
     '*': (multiplying, 'mnożenia'),
     '/': (dividing, 'dzielenia')
 }
-number = ['Pierwszą', 'Drugą', 'Kolejną']
 
-while True:
-    operation_type = input(f'Podaj typ działania jaki chcesz wykonać (dostepne: {list(possible_operations.keys())})')
-    if operation_type not in possible_operations:
-        logging.warning("Podałeś nieprawidłowe działanie!")
-        time.sleep(.1)
-    else:
-        break
 
-while True:
-    i = len(in_values)
-    if i >= 2:
-        if operation_type == '/':
+def operation_choice():
+    while True:
+        operation_type = input(f'Podaj typ działania jaki chcesz wykonać '
+                               f'(dostepne: {list(possible_operations.keys())})')
+        if operation_type not in possible_operations:
+            logging.warning("Podałeś nieprawidłowe działanie!")
+            time.sleep(.1)
+        else:
             break
-        if input(f'Czy chesz podać więcej liczb [T]?').capitalize() != 'T':
-            break
-        i = 2
 
-    new_value = input(f'Podaj {number[i]} liczbę')
-    if new_value.replace('.', '').isnumeric():
-        in_values.append(float(new_value))
-    else:
-        logging.warning("Nie podałeś liczby!")
-        time.sleep(.1)
+    return operation_type
 
-result = resulting(operation_type, in_values)
 
-report = f'''
-Podałeś liczby: {in_values}
-Wynik ich {possible_operations[operation_type][1]} to: {result}
-'''
-print(report)
+def gathering_number(operation):
+    values = []
+    while True:
+        i = len(values)
+        if i >= 2:
+            if operation == '/':
+                break
+            if input(f'Czy chesz podać więcej liczb [T]?').capitalize() != 'T':
+                break
+            i = 2
+
+        new_value = input(f'Podaj {number[i]} liczbę')
+        if new_value.replace('.', '').isnumeric():
+            values.append(float(new_value))
+        else:
+            logging.warning("Nie podałeś liczby!")
+            time.sleep(.1)
+
+    return values
+
+
+def main():
+    operation_type = operation_choice()
+    in_values = (gathering_number(operation_type))
+    result = resulting(operation_type, in_values)
+    print(report_printing(in_values, possible_operations[operation_type][1], result))
+
+
+if __name__ == "__main__":
+    main()
