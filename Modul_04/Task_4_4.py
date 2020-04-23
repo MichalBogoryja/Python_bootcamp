@@ -6,35 +6,35 @@ from functools import reduce
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(message)s')
 
 
-def adding():
-    result = sum(in_values)
+def adding(numbers):
+    result = sum(numbers)
     return result
 
 
-def dividing():
-    result = reduce(lambda x, y: x / y, in_values)
+def dividing(numbers):
+    result = reduce(lambda x, y: x / y, numbers)
     return result
 
 
-def multiplying():
-    result = math.prod(in_values)
+def multiplying(numbers):
+    result = math.prod(numbers)
     return result
 
 
-def substracting():
-    result = reduce(lambda x, y: x - y, in_values)
+def subtracting(numbers):
+    result = reduce(lambda x, y: x - y, numbers)
     return result
 
 
-def resulting(i):
+def resulting(i, numbers):
     func = possible_operations.get(i)[0]
-    return func()
+    return func(numbers)
 
 
 in_values = []
 possible_operations = {
     '+': [adding, 'dodawania'],
-    '-': (substracting, 'odejmowania'),
+    '-': (subtracting, 'odejmowania'),
     '*': (multiplying, 'mnożenia'),
     '/': (dividing, 'dzielenia')
 }
@@ -64,7 +64,7 @@ while True:
         logging.warning("Nie podałeś liczby!")
         time.sleep(.1)
 
-result = resulting(operation_type)
+result = resulting(operation_type, in_values)
 
 report = f'''
 Podałeś liczby: {in_values}
