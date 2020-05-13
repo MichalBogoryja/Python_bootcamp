@@ -127,3 +127,6 @@ dmypy.json
 
 /ListaPytan.txt
 /.idea/
+.idea/Weather.iml
+.idea/encodings.xml
+.idea/workspace.xml
