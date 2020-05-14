@@ -12,6 +12,12 @@ class Card:
         self.position = position
         self.mail = mail
 
+    def __str__(self):
+        return f'{self.name} {self.surname} mail: {self.mail}'
+
+    def __repr__(self):
+        return f'{self.name} {self.surname} mail: {self.mail}'
+
 
 for i in range(5):
     full_name = fake.name()
@@ -35,5 +41,11 @@ for i in range(5):
                         company=person_company, position=fake.job(),
                         mail=person_mail))
 
-for person in persons:
-    print(person.name + ' ' + person.surname + ' ' + person.mail)
+print(*persons, sep='\n')
+
+by_name = sorted(persons, key=lambda person: person.name)
+by_surname = sorted(persons, key=lambda person: person.surname)
+by_mail = sorted(persons, key=lambda person: person.mail)
+
+print(*by_surname, sep='\n')
+
