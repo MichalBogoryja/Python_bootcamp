@@ -12,11 +12,23 @@ class Card:
         self.position = position
         self.mail = mail
 
+        # Variables
+        self._fullname_length = 0
+
     def __str__(self):
         return f'{self.name} {self.surname} mail: {self.mail}'
 
     def __repr__(self):
         return f'{self.name} {self.surname} mail: {self.mail}'
+
+    def contact(self):
+        print(f'Kontaktuję się z {self.name} {self.surname} {self.position} '
+              f'{self.mail}')
+
+    @property
+    def fullname_length(self):
+        self._fullname_length = len(self.name) + len(self.surname) + 1
+        return self._fullname_length
 
 
 for i in range(5):
@@ -41,11 +53,16 @@ for i in range(5):
                         company=person_company, position=fake.job(),
                         mail=person_mail))
 
-print(*persons, sep='\n')
+
+# print(*persons, sep='\n')
 
 by_name = sorted(persons, key=lambda person: person.name)
 by_surname = sorted(persons, key=lambda person: person.surname)
 by_mail = sorted(persons, key=lambda person: person.mail)
 
 print(*by_surname, sep='\n')
+
+for person in persons:
+    person.contact()
+    print(person.fullname_length)
 
