@@ -4,12 +4,11 @@ fake = Faker()
 persons = []
 
 
-class Card:
-    def __init__(self, name, surname, company, position, mail):
+class BaseCard:
+    def __init__(self, name, surname, phone, mail):
         self.name = name
         self.surname = surname
-        self.company = company
-        self.position = position
+        self.phone = phone
         self.mail = mail
 
         # Variables
@@ -22,8 +21,8 @@ class Card:
         return f'{self.name} {self.surname} mail: {self.mail}'
 
     def contact(self):
-        print(f'Kontaktuję się z {self.name} {self.surname} {self.position} '
-              f'{self.mail}')
+        print(f'\nWybieram numer {self.phone} i dzwonię do {self.name} '
+              f'{self.surname}', end='')
 
     @property
     def fullname_length(self):
@@ -31,30 +30,88 @@ class Card:
         return self._fullname_length
 
 
-for i in range(5):
+class BusinessCard(BaseCard):
+    def __init__(self, company, position, business_phone, business_mail,
+                 *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.company = company
+        self.position = position
+        self.business_phone = business_phone
+        self.business_mail = business_mail
+
+    def __str__(self):
+        return f'{self.name} {self.surname} b_mail: {self.business_mail}'
+
+    def __repr__(self):
+        return f'{self.name} {self.surname} b_mail: {self.business_mail}'
+
+    def contact(self, *args, **kwargs):
+        super().contact(*args, **kwargs)
+        print(f' lub dzwonię na numer firmowy {self.business_phone}', end='')
+
+
+def generate_basic_info():
+    data = {}
+
     full_name = fake.name()
     full_name = full_name.split(' ', 1)
     if full_name[0].find('.') >= 0:
         full_name = full_name[1:]
         full_name = full_name[0].split(' ', 1)
-    person_name = full_name[0]
-    person_surname = full_name[1]
-    person_company = fake.company()
-    person_position = fake.job()
-    if person_company.isalnum():
-        person_mail = person_name.lower() + '.' + person_surname.lower() \
-                      + '@' + person_company.lower() + '.com'
+    data['name'] = full_name[0]
+    data['surname'] = full_name[1]
+    data['phone'] = fake.phone_number()
+    data['mail'] = fake.free_email()
+
+    return data
+
+
+def generate_business_info(person_info):
+    data = {}
+
+    data['company'] = fake.company()
+    data['position'] = fake.job()
+    data['phone'] = fake.phone_number()
+
+    if data['company'].isalnum():
+        mail = person_info['name'].lower() + '.' \
+                      + person_info['surname'].lower() + '@' \
+                      + data['company'].lower() + '.com'
     else:
-        company_alnum = ''.join([x for x in person_company if x.isalnum()])
-        person_mail = person_name.lower() + '.' + person_surname.lower() \
+        company_alnum = ''.join([x for x in data['company'] if x.isalnum()])
+        mail = person_info['name'].lower() + '.' \
+                      + person_info['surname'].lower() \
                       + '@' + company_alnum.lower() + '.com'
 
-    persons.append(Card(name=person_name, surname=person_surname,
-                        company=person_company, position=fake.job(),
-                        mail=person_mail))
+    data['mail'] = mail
+
+    return data
 
 
-# print(*persons, sep='\n')
+def create_contacts(amount, private):
+    for i in range(amount):
+        new_person = generate_basic_info()
+        if private:
+            persons.append(BaseCard(name=new_person['name'],
+                                    surname=new_person['surname'],
+                                    phone=new_person['phone'],
+                                    mail=new_person['mail']))
+        else:
+            new_b_person = generate_business_info(new_person)
+            persons.append(BusinessCard(name=new_person['name'],
+                                        surname=new_person['surname'],
+                                        phone=new_person['phone'],
+                                        mail=new_person['mail'],
+                                        company=new_b_person['company'],
+                                        position=new_b_person['position'],
+                                        business_phone=new_b_person['phone'],
+                                        business_mail=new_b_person['mail']))
+
+
+create_contacts(5, True)
+create_contacts(5, False)
+
+print(*persons, sep='\n')
 
 by_name = sorted(persons, key=lambda person: person.name)
 by_surname = sorted(persons, key=lambda person: person.surname)
@@ -62,7 +119,7 @@ by_mail = sorted(persons, key=lambda person: person.mail)
 
 print(*by_surname, sep='\n')
 
-for person in persons:
+for person in by_surname:
     person.contact()
-    print(person.fullname_length)
-
+    print(f'''
+Length of the person's name and surname is: {person.fullname_length}''')
