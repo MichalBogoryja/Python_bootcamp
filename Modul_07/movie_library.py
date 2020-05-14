@@ -8,11 +8,12 @@ class Movie:
         self.view_count = 0
 
     def __str__(self):
-        return f'''Title: {self.title}
+        text = f'''Title: {self.title}
 Year: {self.year}
 Genre: {self.genre}
 Number of views: {self.view_count}
 '''
+        return text
 
 
 class Series(Movie):
@@ -22,8 +23,8 @@ class Series(Movie):
         self.episode = episode
 
     def __str__(self):
-        super().__str__()
-        return f'''Season: {self.season}
+        return f'''{super().__str__()} \
+Season: {self.season}
 Episode: {self.episode}
 '''
 
