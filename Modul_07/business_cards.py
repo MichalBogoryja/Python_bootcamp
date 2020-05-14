@@ -1,4 +1,5 @@
 from faker import Faker
+from datetime import datetime
 
 fake = Faker()
 persons = []
@@ -88,6 +89,23 @@ def generate_business_info(person_info):
     return data
 
 
+def time_count(func):
+
+    def wrapper(x, y):
+        start_time = datetime.now()
+
+        result = func(x, y)
+
+        end_time = datetime.now()
+        time_needed = end_time - start_time
+        print(f'Time needed: {time_needed.seconds}.'
+              f'{time_needed.microseconds}s')
+        return result
+
+    return wrapper
+
+
+@time_count
 def create_contacts(amount, private):
     for i in range(amount):
         new_person = generate_basic_info()
@@ -109,8 +127,9 @@ def create_contacts(amount, private):
 
 
 create_contacts(5, True)
-create_contacts(5, False)
+create_contacts(15, False)
 
+print('')
 print(*persons, sep='\n')
 
 by_name = sorted(persons, key=lambda person: person.name)
