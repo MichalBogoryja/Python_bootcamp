@@ -57,10 +57,6 @@ def get_film_data(title):
     return film_data
 
 
-def generate_one_series():
-    pass
-
-
 def generate_film(number):
     film = []
     m = open('movie_list.txt')
@@ -83,6 +79,34 @@ def generate_film(number):
                                season=film_data['totalSeasons'],
                                episode=1))
     return film
+
+
+def check_series(series, library):
+    for i in range(len(library)-1):
+        if series in library[i].title and isinstance(library[i], Series):
+            series = library[i]
+            break
+        else:
+            if i == len(library) - 2:
+                text = "There is no such a series"
+                raise Exception(text)
+
+    return series
+
+
+def add_full_series(series, library, episodes):
+    entire_series = []
+    series = check_series(series, library)
+
+    for season in range(int(series.season)):
+        for i in range(1, episodes+1):
+            entire_series.append(Series(title=series.title,
+                                        year=series.year,
+                                        genre=series.genre,
+                                        season=str(season),
+                                        episode=i))
+
+    return entire_series
 
 
 def get_movies(full_list):
