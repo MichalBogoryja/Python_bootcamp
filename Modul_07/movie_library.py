@@ -15,8 +15,7 @@ class Movie:
         text = f'''Title: {self.title}
 Year: {self.year}
 Genre: {self.genre}
-Number of views: {self.view_count}
-'''
+Number of views: {self.view_count}'''
         return text
 
     def __repr__(self):
@@ -40,13 +39,11 @@ class Series(Movie):
 
     def __str__(self):
         return f'''{super().__str__()}
-S{self.season:02}E{self.episode:02}
-'''
+S{self.season.rjust(2, "0")}E{self.episode:02}'''
 
     def __repr__(self):
         return f'''{super().__repr__()}
-S{self.season.rjust(2, "0")}E{self.episode:02}
-'''
+S{self.season.rjust(2, "0")}E{self.episode:02}'''
 
 
 def get_film_data(title):
@@ -55,7 +52,7 @@ def get_film_data(title):
     film_data = json.loads(response.text)
     if film_data['Response'] == 'False':
         film_data = False
-    print(film_data)
+    # print(film_data)
 
     return film_data
 
@@ -86,3 +83,63 @@ def generate_film(number):
                                season=film_data['totalSeasons'],
                                episode=1))
     return film
+
+
+def get_movies(full_list):
+    sorted_list = []
+    for picture in full_list:
+        if isinstance(picture, Movie) and not isinstance(picture, Series):
+            sorted_list.append(picture)
+
+    return sorted_list
+
+
+def get_series(full_list):
+    sorted_list = []
+    for picture in full_list:
+        if isinstance(picture, Series):
+            sorted_list.append(picture)
+
+    return sorted_list
+
+
+def search_title(library, name):
+    for picture in library:
+        if picture.title == name:
+            text = "This film is on the list"
+            break
+        else:
+            text = "This film is not on the list"
+
+    return text
+
+
+def generate_views(library):
+    film = random.randint(0, len(library)-1)
+    views = random.randint(1, 100)
+    library[film].view_count += views
+
+    return library
+
+
+def run_views(library, times):
+    for i in range(0, times):
+        generate_views(library)
+
+    return library
+
+
+def top_titles(library, items, movies):
+    if movies == 0:
+        pass
+    elif movies == 1:
+        library = get_movies(library)
+    elif movies == 2:
+        library = get_series(library)
+
+    sorted_library = sorted(library, key=lambda picture: picture.view_count,
+                            reverse=True)
+    sorted_library = sorted_library[:items]
+
+    return sorted_library
+
