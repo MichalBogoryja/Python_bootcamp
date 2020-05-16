@@ -1,5 +1,5 @@
 from movie_library import generate_film, get_movies, get_series, search_title,\
-    run_views, top_titles, add_full_series
+    run_views, top_titles, add_full_series, check_series_length
 
 library = generate_film(10)
 
@@ -19,6 +19,8 @@ print(top_titles(library, 2, 1))  # print 2 most viewed movies
 
 print(top_titles(library, 2, 2))  # print 2 most viewed series
 
-library.append(add_full_series('The Sopranos', library, 10))
+library.extend(add_full_series('The Sopranos', library, 10))
 
 print(library)
+
+print(check_series_length('The Sopranos', library))

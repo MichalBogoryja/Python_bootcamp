@@ -45,6 +45,22 @@ S{self.season.rjust(2, "0")}E{self.episode:02}'''
         return f'''{super().__repr__()}
 S{self.season.rjust(2, "0")}E{self.episode:02}'''
 
+    def episodes_number(self, library):
+        i = 0
+        for series in library:
+            if series.title == self.title:
+                i += 1
+        return i
+
+
+def check_series_length(series, library):
+    for picture in library:
+        if picture.title == series:
+            number = picture.episodes_number(library=get_series(library))
+            break
+    result = f'''Number of {picture.title}'s episodes is {number}'''
+    
+    return result
 
 def get_film_data(title):
     response = requests.get(f'http://www.omdbapi.com/?apikey=74a6ab0e&'
@@ -98,13 +114,16 @@ def add_full_series(series, library, episodes):
     entire_series = []
     series = check_series(series, library)
 
-    for season in range(int(series.season)):
+    for season in range(1, int(series.season)+1):
         for i in range(1, episodes+1):
-            entire_series.append(Series(title=series.title,
-                                        year=series.year,
-                                        genre=series.genre,
-                                        season=str(season),
-                                        episode=i))
+            if season == int(series.season) and i == 1:
+                pass
+            else:
+                entire_series.append(Series(title=series.title,
+                                            year=series.year,
+                                            genre=series.genre,
+                                            season=str(season),
+                                            episode=i))
 
     return entire_series
 
