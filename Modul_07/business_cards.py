@@ -1,7 +1,8 @@
 from faker import Faker
 from datetime import datetime
+# from business_cards_test import test_phone
 
-fake = Faker()
+fake = Faker(['pl_PL'])
 persons = []
 
 
@@ -75,14 +76,14 @@ def generate_business_info(person_info):
     data['phone'] = fake.phone_number()
 
     if data['company'].isalnum():
-        mail = person_info['name'].lower() + '.' \
-                      + person_info['surname'].lower() + '@' \
-                      + data['company'].lower() + '.com'
+        mail = (person_info['name'].lower() + '.'
+                + person_info['surname'].lower() + '@'
+                + data['company'].lower() + '.com')
     else:
         company_alnum = ''.join([x for x in data['company'] if x.isalnum()])
-        mail = person_info['name'].lower() + '.' \
-                      + person_info['surname'].lower() \
-                      + '@' + company_alnum.lower() + '.com'
+        mail = (person_info['name'].lower() + '.'
+                + person_info['surname'].lower() + '@'
+                + company_alnum.lower() + '.com')
 
     data['mail'] = mail
 
@@ -91,10 +92,10 @@ def generate_business_info(person_info):
 
 def time_count(func):
 
-    def wrapper(x, y):
+    def wrapper(*args, **kwargs):
         start_time = datetime.now()
 
-        result = func(x, y)
+        result = func(*args, **kwargs)
 
         end_time = datetime.now()
         time_needed = end_time - start_time
@@ -124,21 +125,24 @@ def create_contacts(amount, private):
                                         position=new_b_person['position'],
                                         business_phone=new_b_person['phone'],
                                         business_mail=new_b_person['mail']))
+    return persons
 
 
-create_contacts(5, True)
-create_contacts(15, False)
+if __name__ == "__main__":
+    create_contacts(5, True)
+    create_contacts(15, False)
 
-print('')
-print(*persons, sep='\n')
+    print('')
+    print(*persons, sep='\n')
 
-by_name = sorted(persons, key=lambda person: person.name)
-by_surname = sorted(persons, key=lambda person: person.surname)
-by_mail = sorted(persons, key=lambda person: person.mail)
+    by_name = sorted(persons, key=lambda person: person.name)
+    by_surname = sorted(persons, key=lambda person: person.surname)
+    by_mail = sorted(persons, key=lambda person: person.mail)
 
-print(*by_surname, sep='\n')
+    print(*by_surname, sep='\n')
 
-for person in by_surname:
-    person.contact()
-    print(f'''
-Length of the person's name and surname is: {person.fullname_length}''')
+    for person in by_surname:
+        person.contact()
+        print(f'''
+    Length of the person's name and surname is: {person.fullname_length}''')
+        # test_phone(person)
