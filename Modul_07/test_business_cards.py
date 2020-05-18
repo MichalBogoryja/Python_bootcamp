@@ -11,3 +11,5 @@ def test_mail_structure():
     card = create_contacts(1, True)
     mail = card[0].mail
     assert mail.replace(".", "").replace("@", "").isalnum()
+    assert ('.'.join(mail.split('.')[-1:]) == 'pl' or
+            '.'.join(mail.split('.')[-1:]) == 'com')
