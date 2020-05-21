@@ -1,0 +1,19 @@
+.title {
+    font-size: 45px;
+    background-color: grey;
+}
+.info {
+    color: blue;
+    font-size: 40px;
+}
+.data {
+    font-size: 25px;
+    margin-left: 15px;
+}
+.button {
+    font-size: 25px;
+}
+.label_text {
+    font-size: 35px;
+    color: navy;
+}
