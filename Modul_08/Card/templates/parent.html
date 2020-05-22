@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+    <head>
+    {% block head %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% endblock %}
+    </head>
+    <body>
+        <h1 class="title">Witaj na mojej stronie domowej</h1>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/AC72_New_Zealand_
+Aotearoa_San_Francisco_01.jpg" width="400" height="300" />
+        <div id="content">{% block content %}{% endblock %}</div>
+    </body>
+</html>
