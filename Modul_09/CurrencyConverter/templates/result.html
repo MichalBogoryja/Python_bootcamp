@@ -1,0 +1,34 @@
+{% extends "parent.html" %}
+{% block content %}
+<div id="info">
+    <form action="/result" style="display: inline">
+        <label for="value">Kwota:</label>
+        <input type="text" id="value" name="value">
+
+        <label for="currency">Wybierz walutę:</label>
+        <select name="currency" id="currency">
+            {% for code in codes %}
+                <option value={{code}}>{{code}}</option>
+            {% endfor %}
+        </select>
+
+        <input type="radio" id="buy" name="action" value="buy">
+        <label for="buy">Kup</label>
+        <input type="radio" id="sale" name="action" value="sale">
+        <label for="sale">Sprzedaj</label>
+        <input class="button" type="submit" value="Przelicz">
+    </form>
+    <form action="/calculator" style="display: inline">
+        <input class="button" type="submit" value="Odśwież">
+    </form>
+    <br>
+    {% if message["action"] is eq "buy" %}
+        <h3>Kupno {{ message["value"] }} {{ message["currency"] }}
+            będzie kosztować {{ message["value"]|int * ask|float }}PLN</h3>
+    {% else %}
+        <h3>Sprzedasz {{ message["value"] }} {{ message["currency"] }}
+            za {{ message["value"]|int * bid|float }}PLN</h3>
+    {% endif %}
+</div>
+
+{% endblock %}

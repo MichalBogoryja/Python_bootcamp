@@ -1,0 +1,25 @@
+{% extends "parent.html" %}
+{% block content %}
+<div id="info">
+    <form action="/result" style="display: inline">
+        <label for="value">Kwota:</label>
+        <input type="text" id="value" name="value">
+
+        <label for="currency">Wybierz walutę:</label>
+        <select name="currency" id="currency">
+            {% for code in codes %}
+                <option value={{code}}>{{code}}</option>
+            {% endfor %}
+        </select>
+
+        <input type="radio" id="buy" name="action" value="buy">
+        <label for="buy">Kup</label>
+        <input type="radio" id="sale" name="action" value="sale">
+        <label for="sale">Sprzedaj</label>
+        <input class="button" type="submit" value="Przelicz">
+    </form>
+    <form action="/calculato" style="display: inline">
+        <input class="button" type="submit" value="Odśwież">
+    </form>
+</div>
+{% endblock %}

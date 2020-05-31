@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+    <head>
+    {% block head %}
+    {% endblock %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <div class="image">
+            <div class="text">
+                <h1>Witaj w kalkulatorze walut  </h1>
+                <h2>Możesz tu sprawdzić kursy różnych walut</h2>
+            </div>
+        </div>
+        <div>{% block content %}{% endblock %}</div>
+    </body>
+</html>
