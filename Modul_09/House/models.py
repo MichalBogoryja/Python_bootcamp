@@ -66,6 +66,7 @@ class Finances:
         for category in categories:
             finance = self.count_budget(category)
             result[category] = finance[category]
+        result = sorted(result.items(), key = lambda x: x[1]["Koszty"])
         return result
 
 
