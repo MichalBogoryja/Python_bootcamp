@@ -59,7 +59,6 @@ class Finances:
         with open("finances.json", "w") as f:
             json.dump(self.finances, f)
 
-
     def delete(self, id):
         finance = self.get(id)
         if finance:
@@ -112,13 +111,14 @@ class FinancesSQL:
         return self.finances
 
     def get(self, id, db_file):
-        finance = [finance for finance in self.all(db_file) if finance[0] == id]
+        finance = [finance for finance in self.all(db_file)
+                   if finance[0] == id]
         if finance:
             return finance[0]
         return []
 
     def create(self, data, db_file):
-        sql = f'''INSERT INTO {table}(title, description, kategoria, kwota, 
+        sql = f'''INSERT INTO {table}(title, description, kategoria, kwota,
             przychod) VALUES(?,?,?,?,?)'''
         self.save_all(db_file, sql, data)
 
