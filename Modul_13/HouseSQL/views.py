@@ -1,6 +1,6 @@
 from flask import jsonify, abort, request
 from models import financesSQL
-from . import app, db_file
+from app import app, db_file
 
 
 @app.route("/api/v1/finances/", methods=["GET"])

@@ -17,4 +17,4 @@ def bad_request(error):
                          400)
 
 
-from . import views
+import views
